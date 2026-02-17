@@ -26,6 +26,7 @@ namespace git {
         }
     }
     auto cat_file(std::string hash) -> void {
+        std::cerr << "Hash provided: " << hash << '\n';
         auto path = std::string(".git/objects/") + std::string(hash.substr(0, 2)) +
                     "/" + std::string(hash.substr(2));
         std::cerr << "Looking for file at path: " << path << '\n';
