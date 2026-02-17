@@ -26,9 +26,9 @@ namespace git {
         }
     }
     void catfile(std::string path) {
-        std::cout << "Looking for object with hash: " << path << '\n';
+        std::cerr << "Looking for object with hash: " << path << '\n';
         std::string filepath = ".git/objects/" + path.substr(0, 2) + "/" + path.substr(2);
-        std::cout << "Constructed file path: " << filepath << '\n';
+        std::cerr << "Constructed file path: " << filepath << '\n';
         zstr::ifstream file(filepath);
         if (!file.is_open()) {
             std::cerr << "Failed to open file: " << filepath << '\n';
