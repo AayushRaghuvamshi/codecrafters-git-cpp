@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <zstr.hpp>
+#include "../includes/git.h"
 
 
 namespace git {
