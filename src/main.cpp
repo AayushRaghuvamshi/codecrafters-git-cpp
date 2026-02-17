@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     if (command == "init") {
         git::init();
     } else if (command == "cat-file") {
+        for(int i = 0; i < argc; i++) {
+            std::cerr << "Argument " << i << ": " << argv[i] << '\n';
+        }
         git::catfile(argv[3]);
     } 
     else {
