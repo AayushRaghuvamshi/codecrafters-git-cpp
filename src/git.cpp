@@ -28,19 +28,16 @@ namespace git {
     void cat_file(std::string path) {
         std::cerr << "Looking for object with hash: " << path << '\n';
         std::string filepath = ".git/objects/" + path.substr(0, 2) + "/" + path.substr(2);
-        std::cerr << "Constructed file path: " << filepath << '\n';
         zstr::ifstream file(filepath);
         if (!file.is_open()) {
             std::cerr << "Failed to open file: " << filepath << '\n';
             return;
         }
-        std::cerr << "Successfully opened file: " << filepath << '\n';
         std::array<char, 64*1024> buffer;
         std::string file_content;
         while(file) {
             file.read(buffer.data(), buffer.size());
             std::streamsize n = file.gcount();
-            std::cerr << "Read " << n << " bytes from file.\n";
             if (n > 0) {
                 file_content.append(buffer.data(), static_cast<size_t>(n));
             }
