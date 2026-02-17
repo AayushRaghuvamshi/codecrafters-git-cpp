@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
         for(int i = 0; i < argc; i++) {
             std::cerr << "Argument " << i << ": " << argv[i] << '\n';
         }
-        git::catfile(argv[3]);
+        git::cat_file(argv[3]);
     } 
     else {
         std::cerr << "Unknown command " << command << '\n';

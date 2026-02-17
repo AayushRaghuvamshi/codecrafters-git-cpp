@@ -4,5 +4,5 @@
 
 namespace git {
     bool init();
-    std::string catfile(std::string filepath);
+    std::string cat_file(std::string filepath);
 }
