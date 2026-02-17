@@ -42,7 +42,12 @@ namespace git {
                 file_content.append(buffer.data(), static_cast<size_t>(n));
             }
         }
-        std::string content = file_content.substr(file_content.find('\0') + 1);
-        std::cout << content;
+        auto nul = file_content.find('\0');
+        if (nul == std::string::npos) {
+            std::cerr << "Invalid git object: missing NUL header. Decompressed bytes="
+                    << file_content.size() << "\n";
+            return;
+        }
+        std::cout << file_content.substr(nul + 1);
     }
 }
