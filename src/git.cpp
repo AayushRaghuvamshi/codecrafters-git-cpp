@@ -5,6 +5,21 @@
 #include <zstr.hpp>
 #include "../includes/git.h"
 
+namespace {
+    std::string read_file(std::istream& in) {
+        std::string content;
+        std::array<char, 64*1024> buffer;
+        while(in) {
+            in.read(buffer.data(), buffer.size());
+            std::streamsize n = in.gcount();
+            if (n > 0) {
+                content.append(buffer.data(), static_cast<size_t>(n));
+            }
+        }
+        return content;
+    }
+}
+
 
 namespace git {
     void init() {
@@ -35,14 +50,7 @@ namespace git {
             return;
         }
         std::array<char, 64*1024> buffer;
-        std::string file_content;
-        while(file) {
-            file.read(buffer.data(), buffer.size());
-            std::streamsize n = file.gcount();
-            if (n > 0) {
-                file_content.append(buffer.data(), static_cast<size_t>(n));
-            }
-        }
+        std::string file_content = read_file(file);
         auto nul = file_content.find('\0');
         if (nul == std::string::npos) {
             std::cerr << "Invalid git object: missing NUL header. Decompressed bytes="
