@@ -39,6 +39,7 @@ namespace git {
         while(file) {
             file.read(buffer.data(), buffer.size());
             std::streamsize n = file.gcount();
+            std::cerr << "Read " << n << " bytes from file.\n";
             if (n > 0) {
                 file_content.append(buffer.data(), static_cast<size_t>(n));
             }
