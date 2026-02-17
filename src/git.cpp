@@ -22,7 +22,7 @@ namespace {
 
 
 namespace git {
-    void init() {
+    auto init() -> void {
         try {
             std::filesystem::create_directory(".git");
             std::filesystem::create_directory(".git/objects");
@@ -41,7 +41,7 @@ namespace git {
             std::cerr << e.what() << '\n';
         }
     }
-    void cat_file(std::string path) {
+    auto cat_file(std::string path) -> void {
         std::cerr << "Looking for object with hash: " << path << '\n';
         std::string filepath = ".git/objects/" + path.substr(0, 2) + "/" + path.substr(2);
         zstr::ifstream file(filepath);
