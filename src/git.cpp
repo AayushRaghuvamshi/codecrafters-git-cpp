@@ -49,7 +49,6 @@ namespace git {
             std::cerr << "Failed to open file: " << filepath << '\n';
             return;
         }
-        std::array<char, 64*1024> buffer;
         std::string file_content = read_file(file);
         auto nul = file_content.find('\0');
         if (nul == std::string::npos) {
