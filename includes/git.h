@@ -3,6 +3,6 @@
 #include <string>
 
 namespace git {
-    bool init();
-    std::string cat_file(std::string filepath);
+    void init();
+    auto cat_file(std::string hash);
 }
