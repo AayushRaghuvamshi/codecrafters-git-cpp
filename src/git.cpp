@@ -25,7 +25,7 @@ namespace git {
             std::cerr << e.what() << '\n';
         }
     }
-    auto cat_file(std::string_view hash) -> void {
+    auto cat_file(std::string hash) -> void {
         auto path = std::string(".git/objects/") + std::string(hash.substr(0, 2)) +
                     "/" + std::string(hash.substr(2));
 
