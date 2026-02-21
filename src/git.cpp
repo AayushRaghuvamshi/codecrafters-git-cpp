@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <zstr.hpp>
+#include <openssl/sha.h>
+#include <stdbool.h>
 #include "../includes/git.h"
 
 namespace {
@@ -57,5 +59,38 @@ namespace git {
             return;
         }
         std::cout << file_content.substr(nul + 1);
+    }
+    auto hash_object(std::string path, bool flag_w_present) -> void {
+        std::cerr << "Hashing file: " << path << '\n';
+        std::ifstream file(path);
+        if (!file.is_open()) {  
+            std::cerr << "Failed to open file: " << path << '\n';
+            return;
+        }       
+        std::string file_content = read_file(file);
+        std::string header = "blob " + std::to_string(file_content.size()) + '\0';
+        std::string store_content = header + file_content;
+        unsigned char hash[20];
+        SHA1(reinterpret_cast<const unsigned char*>(store_content.data()), store_content.size(), hash);
+        std::string hash_str;
+        for (int i = 0; i < 20; i++) {
+            char hex[3];
+            snprintf(hex, sizeof(hex), "%02x", hash[i]);
+            hash_str += hex;
+        }
+        std::cerr << hash_str << '\n';
+        if (flag_w_present) {
+            std::string dir = ".git/objects/" + hash_str.substr(0, 2);
+            std::string filepath = dir + "/" + hash_str.substr(2);
+            try {
+                std::filesystem::create_directories(dir);
+                zstr::ofstream out(filepath);
+                out.write(store_content.data(), store_content.size());
+                out.close();
+                std::cout << hash_str << '\n';
+            } catch (const std::filesystem::filesystem_error& e) {
+                std::cerr << e.what() << '\n';
+            }
+        }
     }
 }
