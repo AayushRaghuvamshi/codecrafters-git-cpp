@@ -78,7 +78,7 @@ namespace git {
             snprintf(hex, sizeof(hex), "%02x", hash[i]);
             hash_str += hex;
         }
-        std::cerr << hash_str << '\n';
+        std::cout << hash_str << '\n';
         if (flag_w_present) {
             std::string dir = ".git/objects/" + hash_str.substr(0, 2);
             std::string filepath = dir + "/" + hash_str.substr(2);
@@ -87,7 +87,6 @@ namespace git {
                 zstr::ofstream out(filepath);
                 out.write(store_content.data(), store_content.size());
                 out.close();
-                std::cout << hash_str << '\n';
             } catch (const std::filesystem::filesystem_error& e) {
                 std::cerr << e.what() << '\n';
             }
